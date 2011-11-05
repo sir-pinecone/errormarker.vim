@@ -141,6 +141,9 @@ function! s:SetErrorMarkers()
         endif
         execute ":sign place " . l:key . " line=" . l:d.lnum . " name=" .
                     \ l:name . " buffer=" . l:d.bufnr
+        if !has('gui_running')
+          redraw!
+        endif
     endfor
 endfunction
 
