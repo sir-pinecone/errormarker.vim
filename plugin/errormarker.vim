@@ -63,10 +63,10 @@ call s:DefineVariable("g:errormarker_warningicon",
                 \ "/usr/share/icons/gnome/16x16/status/dialog-warning.png")
 
 " Defines the text (two characters) to show for errors in the gui
-call s:DefineVariable("g:errormarker_errortext", "EE")
+call s:DefineVariable("g:errormarker_errortext", ">>")
 
 " Defines the text (two characters) to show for warnings in the gui
-call s:DefineVariable("g:errormarker_warningtext", "WW")
+call s:DefineVariable("g:errormarker_warningtext", ">>")
 
 " Defines the highlighting group to use for errors in the gui
 call s:DefineVariable("g:errormarker_errorgroup", "Todo")
