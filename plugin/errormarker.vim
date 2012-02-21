@@ -69,10 +69,10 @@ call s:DefineVariable("g:errormarker_errortext", ">>")
 call s:DefineVariable("g:errormarker_warningtext", ">>")
 
 " Defines the highlighting group to use for errors in the gui
-call s:DefineVariable("g:errormarker_errorgroup", "Todo")
+call s:DefineVariable("g:errormarker_errorgroup", "SpellBad")
 
 " Defines the highlighting group to use for warnings in the gui
-call s:DefineVariable("g:errormarker_warninggroup", "Todo")
+call s:DefineVariable("g:errormarker_warninggroup", "SpellBad")
 
 " Defines the error types that should be treated as warning
 call s:DefineVariable("g:errormarker_warningtypes", "wW")
