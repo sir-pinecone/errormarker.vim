@@ -88,10 +88,10 @@ let s:warningicon = ""
 if filereadable(g:errormarker_warningicon)
     let s:warningicon = " icon=" . escape(g:errormarker_warningicon, '| \')
 endif
-execute "sign define errormarker_error text=" . g:errormarker_errortext .
+execute "sign define errormarker_error texthl=ErrorMsg text=" . g:errormarker_errortext .
             \ " linehl=" . g:errormarker_errorgroup . s:erroricon
 
-execute "sign define errormarker_warning text=" . g:errormarker_warningtext .
+execute "sign define errormarker_warning texthl=ErrorMsg text=" . g:errormarker_warningtext .
             \ " linehl=" . g:errormarker_warninggroup . s:warningicon
 
 " Setup the autocommands that handle the MRUList and other stuff.
