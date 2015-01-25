@@ -52,27 +52,25 @@ endfunction
 
 " === Variables =========================================================={{{1
 
+let s:iconpath = expand("<sfile>:h:h") . "/icons/"
+
 " Defines the icon to show for errors in the gui
-call s:DefineVariable("g:errormarker_erroricon",
-            \ has('win32') ? expand("~/vimfiles/icons/error.bmp") :
-                \ "/usr/share/icons/gnome/16x16/status/dialog-error.png")
+call s:DefineVariable("g:errormarker_erroricon", s:iconpath . "error.ico")
 
 " Defines the icon to show for warnings in the gui
-call s:DefineVariable("g:errormarker_warningicon",
-            \ has('win32') ? expand("~/vimfiles/icons/warning.bmp") :
-                \ "/usr/share/icons/gnome/16x16/status/dialog-warning.png")
+call s:DefineVariable("g:errormarker_warningicon", s:iconpath . "warning.ico")
 
-" Defines the text (two characters) to show for errors in the gui
+" Defines the text (two characters) to show in the gui
 call s:DefineVariable("g:errormarker_errortext", "EE")
-
-" Defines the text (two characters) to show for warnings in the gui
 call s:DefineVariable("g:errormarker_warningtext", "WW")
 
-" Defines the highlighting group to use for errors in the gui
-call s:DefineVariable("g:errormarker_errorgroup", "Todo")
-
-" Defines the highlighting group to use for warnings in the gui
+" Defines the highlighting group to use in the gui
+call s:DefineVariable("g:errormarker_errorgroup", "ErrorMsg")
 call s:DefineVariable("g:errormarker_warninggroup", "Todo")
+
+" Defines the highlighting group to use for the marker in the gui
+call s:DefineVariable("g:errormarker_errortextgroup", "ErrorMsg")
+call s:DefineVariable("g:errormarker_warningtextgroup", "Todo")
 
 " Defines the error types that should be treated as warning
 call s:DefineVariable("g:errormarker_warningtypes", "wW")
@@ -89,10 +87,14 @@ if filereadable(g:errormarker_warningicon)
     let s:warningicon = " icon=" . escape(g:errormarker_warningicon, '| \')
 endif
 execute "sign define errormarker_error text=" . g:errormarker_errortext .
-            \ " linehl=" . g:errormarker_errorgroup . s:erroricon
+            \ " linehl=" . g:errormarker_errorgroup .
+            \ " texthl=" . g:errormarker_errortextgroup .
+            \ s:erroricon
 
 execute "sign define errormarker_warning text=" . g:errormarker_warningtext .
-            \ " linehl=" . g:errormarker_warninggroup . s:warningicon
+            \ " linehl=" . g:errormarker_warninggroup .
+            \ " texthl=" . g:errormarker_warningtextgroup .
+            \ s:warningicon
 
 " Setup the autocommands that handle the MRUList and other stuff.
 augroup errormarker

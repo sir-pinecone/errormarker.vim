@@ -53,13 +53,20 @@ C:\Documents and Settings\<user>\vimfiles\icons.
                              *errormarker_errortext* *errormarker_warningtext*
 The text that is displayed without a GUI or if the icon files can not be found
 can be set by >
-        :let errormarker_errortext = "Er"
-        :let errormarker_warningtext = "Wa"
+        :let errormarker_errortext = "EE"
+        :let errormarker_warningtext = "WW"
 The maximum length is two characters.
+
+                   *errormarker_errortextgroup* *errormarker_warningtextgroup*
+The hightlighting groups that are used for the text signs without a GUI can be
+set by >
+        :let errormarker_errortextgroup = "ErrorMsg"
+        :let errormarker_warningtextgroup = "Todo"
+Use the "Normal" highlighting group to remove any highlighting.
 
                            *errormarker_errorgroup* *errormarker_warninggroup*
 The hightlighting groups that are used to mark the lines that contain warnings
-and errors can be set by >
+and errors in the text can be set by >
         :let errormarker_errorgroup = "ErrorMsg"
         :let errormarker_warninggroup = "Todo"
 <
