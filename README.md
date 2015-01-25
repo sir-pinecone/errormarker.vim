@@ -21,8 +21,6 @@ Use [pathogen.vim](https://github.com/tpope/vim-pathogen).
     cd ~/.vim/bundle
     git clone git://github.com/mh21/errormarker.vim
 
-The help file will be automatically installed the next time VIM is launched.
-
 ## Configuration
 
 To distinguish between warnings and errors for gcc messages, place sth. like this in your .vimrc:
