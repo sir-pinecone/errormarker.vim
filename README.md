@@ -35,7 +35,7 @@ If you use a different locale than English, this may be also needed:
 
 ## About
 
-A changelog can be found at the end of [errormarker.vim](plugin/errormarker.vim).
+A changelog can be found at the end of [errormarker.txt](doc/errormarker.txt).
 
 Get the latest version, submit pull requests, and file bug reports
 on GitHub:

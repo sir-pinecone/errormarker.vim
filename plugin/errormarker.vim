@@ -1,5 +1,5 @@
 " ============================================================================
-"    Copyright: Copyright (C) 2007,2010 Michael Hofmann
+"    Copyright: Copyright (C) 2007,2015 Michael Hofmann
 "               Permission is hereby granted to use and distribute this code,
 "               with or without modifications, provided that this copyright
 "               notice is copied with it. Like anything else that's free,
@@ -33,7 +33,7 @@ if exists("g:loaded_errormarker") || &compatible
 endif
 
 " Version number.
-let g:loaded_errormarker = "0.1.13"
+let g:loaded_errormarker = "0.2"
 
 let s:save_cpo = &cpo
 set cpo&vim
