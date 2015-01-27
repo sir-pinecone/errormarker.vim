@@ -3,6 +3,7 @@
 Highlights and sets error markers for lines with compile errors
 
 - Author: Michael Hofmann
+- Newest version: https://github.com/mh21/errormarker.vim
 
 ## Introduction
 
