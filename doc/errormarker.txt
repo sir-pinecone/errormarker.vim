@@ -88,14 +88,20 @@ can be parsed by adding the following lines to your .vimrc >
 If you use a different locale than English, this may also be needed: >
         set makeprg=LANGUAGE=C\ make
 <
-                          *errormarker_disablemappings* *\cc* *:ErrorAtCursor*
+                                                        *\cc* *:ErrorAtCursor*
 To show the error message at the cursor position (e.g. if you are working from
 within a terminal, where tooltips are not available), the following command
 and shortcut are defined: >
         :ErrorAtCursor
         :nmap <silent> <unique> <Leader>cc :ErrorAtCursor<CR>
-
-The shortcut is only defined if no other mapping to ErrorAtCursor<CR> can be
+<
+                                                   *\cr* *:RemoveErrorMarkers*
+You can also remove all error markers: >
+        :RemoveErrorMarkers
+        :nmap <silent> <unique> <Leader>cr :RemoveErrorMarkers<CR>
+<
+                                                 *errormarker_disablemappings*
+The shortcuts are only defined if no other mappings to the commands can be
 found, and can be completely disabled by >
         let errormarker_disablemappings = 1
 <
@@ -108,6 +114,7 @@ Author: Michael Hofmann <mh21 at mh21 dot de>
 ==============================================================================
 4. CHANGELOG                                           *errormarker-changelog*
 
+0.2.2   - shortcut (<Leader>cr) to remove all error markers (thanks Linwei)
 0.2.1   - only remove own signs (thanks Mike Szymaniak)
 0.2     - redraw (thanks yoppi, kano4)
         - ship icons, sign highlight (thanks andersonfreitas)

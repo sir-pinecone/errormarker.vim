@@ -1,5 +1,5 @@
 " ============================================================================
-"    Copyright: Copyright (C) 2007,2015 Michael Hofmann
+"    Copyright: Copyright (C) 2007,2016 Michael Hofmann
 "               Permission is hereby granted to use and distribute this code,
 "               with or without modifications, provided that this copyright
 "               notice is copied with it. Like anything else that's free,
@@ -9,7 +9,7 @@
 "               resulting from the use of this software.
 " Name Of File: errormarker.vim
 "  Description: Sets markers for compile errors
-"   Maintainer: Michael Hofmann (mh21 at piware dot de)
+"   Maintainer: Michael Hofmann (mh21 at mh21 dot de)
 "      Version: See g:loaded_errormarker for version number.
 "        Usage: Normally, this file should reside in the plugins
 "               directory and be automatically sourced. If not, you must
@@ -33,15 +33,21 @@ if exists("g:loaded_errormarker") || &compatible
 endif
 
 " Version number.
-let g:loaded_errormarker = "0.2.1"
+let g:loaded_errormarker = "0.2.2"
 
 let s:save_cpo = &cpo
 set cpo&vim
 
-command ErrorAtCursor call ShowErrorAtCursor()
+command ErrorAtCursor call s:ShowErrorAtCursor()
+command RemoveErrorMarkers call s:RemoveErrorMarkers()
+
 if !hasmapto(":ErrorAtCursor<cr>", "n") &&
             \ (!exists('g:errormarker_disablemappings') || !g:errormarker_disablemappings)
     nmap <silent> <unique> <Leader>cc :ErrorAtCursor<CR>
+endif
+if !hasmapto(":RemoveErrorMarkers<cr>", "n") &&
+            \ (!exists('g:errormarker_disablemappings') || !g:errormarker_disablemappings)
+    nmap <silent> <unique> <Leader>cr :RemoveErrorMarkers<CR>
 endif
 
 function! s:DefineVariable(name, default)
@@ -105,7 +111,7 @@ augroup END
 
 " === Functions =========================================================={{{1
 
-function! ShowErrorAtCursor()
+function! s:ShowErrorAtCursor()
     let [l:bufnr, l:lnum] = getpos(".")[0:1]
     let l:bufnr = bufnr("%")
     for l:d in getqflist()
@@ -115,6 +121,18 @@ function! ShowErrorAtCursor()
         redraw | echomsg l:d.text
     endfor
     echo
+endfunction
+
+function! s:RemoveErrorMarkers()
+    for l:key in keys(s:positions)
+        execute ":sign unplace " . l:key
+    endfor
+
+    let s:positions = {}
+
+    if !has('gui_running')
+        redraw!
+    endif
 endfunction
 
 function! s:SetErrorMarkers()
