@@ -19,6 +19,7 @@
 
 " GetLatestVimScripts: 1861 1 :AutoInstall: errormarker.vim
 
+
 " === Initialization ====================================================={{{1
 
 " Exit when the Vim version is too old or missing some features
@@ -56,6 +57,7 @@ function! s:DefineVariable(name, default)
     endif
 endfunction
 
+
 " === Variables =========================================================={{{1
 
 let s:iconpath = expand("<sfile>:h:h") . "/icons/"
@@ -66,20 +68,31 @@ call s:DefineVariable("g:errormarker_erroricon", s:iconpath . "error.ico")
 " Defines the icon to show for warnings in the gui
 call s:DefineVariable("g:errormarker_warningicon", s:iconpath . "warning.ico")
 
+" Defines the icon to show for infos in the gui
+call s:DefineVariable("g:errormarker_infoicon", s:iconpath . "info.ico")
+
 " Defines the text (two characters) to show in the gui
 call s:DefineVariable("g:errormarker_errortext", "EE")
 call s:DefineVariable("g:errormarker_warningtext", "WW")
+call s:DefineVariable("g:errormarker_infotext", "II")
 
 " Defines the highlighting group to use in the gui
 call s:DefineVariable("g:errormarker_errorgroup", "ErrorMsg")
 call s:DefineVariable("g:errormarker_warninggroup", "Todo")
+call s:DefineVariable("g:errormarker_infogroup", "Todo")
 
 " Defines the highlighting group to use for the marker in the gui
 call s:DefineVariable("g:errormarker_errortextgroup", "ErrorMsg")
 call s:DefineVariable("g:errormarker_warningtextgroup", "Todo")
+call s:DefineVariable("g:errormarker_infotextgroup", "Todo")
 
 " Defines the error types that should be treated as warning
 call s:DefineVariable("g:errormarker_warningtypes", "wW")
+
+" Defines the error types that should be treated as info
+call s:DefineVariable("g:errormarker_infotypes", "iI")
+
+
 
 " === Global ============================================================={{{1
 
@@ -92,6 +105,11 @@ let s:warningicon = ""
 if filereadable(g:errormarker_warningicon)
     let s:warningicon = " icon=" . escape(g:errormarker_warningicon, '| \')
 endif
+let s:infoicon = ""
+if filereadable(g:errormarker_infoicon)
+    let s:infoicon = " icon=" . escape(g:errormarker_infoicon, '| \')
+endif
+
 execute "sign define errormarker_error text=" . g:errormarker_errortext .
             \ " linehl=" . g:errormarker_errorgroup .
             \ " texthl=" . g:errormarker_errortextgroup .
@@ -102,12 +120,19 @@ execute "sign define errormarker_warning text=" . g:errormarker_warningtext .
             \ " texthl=" . g:errormarker_warningtextgroup .
             \ s:warningicon
 
+execute "sign define errormarker_info text=" . g:errormarker_infotext .
+            \ " linehl=" . g:errormarker_infogroup .
+            \ " texthl=" . g:errormarker_infotextgroup .
+            \ s:infoicon
+
+
 let s:positions = {}
 
 " Setup the autocommands
 augroup errormarker
     autocmd QuickFixCmdPost make call <SID>SetErrorMarkers()
 augroup END
+
 
 " === Functions =========================================================={{{1
 
@@ -157,11 +182,13 @@ function! s:SetErrorMarkers()
         endif
         let s:positions[l:key] = 1
 
-        if strlen(l:d.type) &&
-                    \ stridx(g:errormarker_warningtypes, l:d.type) >= 0
-            let l:name = "errormarker_warning"
-        else
-            let l:name = "errormarker_error"
+        let l:name = "errormarker_error"
+        if strlen(l:d.type)
+            if stridx(g:errormarker_warningtypes, l:d.type) >= 0
+                let l:name = "errormarker_warning"
+            elseif stridx(g:errormarker_infotypes, l:d.type) >= 0
+                let l:name = "errormarker_info"
+            endif
         endif
         execute ":sign place " . l:key . " line=" . l:d.lnum . " name=" .
                     \ l:name . " buffer=" . l:d.bufnr
@@ -185,6 +212,7 @@ function! s:SID()
     return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze_SID$')
 endfunction
 
+
 " === Cleanup ============================================================{{{1
 
 let &cpo = s:save_cpo
@@ -192,3 +220,4 @@ let &cpo = s:save_cpo
 finish
 
 " vim:ft=vim foldmethod=marker tw=78
+"
