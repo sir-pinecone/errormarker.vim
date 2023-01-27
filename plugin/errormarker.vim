@@ -15,12 +15,13 @@
 "               directory and be automatically sourced. If not, you must
 "               manually source this file using ':source errormarker.vim'.
 
-" === Support for automatic retrieval (Vim script 642) ==================={{{1
+" === Support for automatic retrieval (Vim script 642) ===================
 
 " GetLatestVimScripts: 1861 1 :AutoInstall: errormarker.vim
 
 
-" === Initialization ====================================================={{{1
+
+" === Initialization =====================================================
 
 " Exit when the Vim version is too old or missing some features
 if v:version < 700 || !has("signs") || !has("autocmd")
@@ -42,15 +43,6 @@ set cpo&vim
 command ErrorAtCursor call s:ShowErrorAtCursor()
 command RemoveErrorMarkers call s:RemoveErrorMarkers()
 
-if !hasmapto(":ErrorAtCursor<cr>", "n") &&
-            \ (!exists('g:errormarker_disablemappings') || !g:errormarker_disablemappings)
-    nmap <silent> <unique> <Leader>cc :ErrorAtCursor<CR>
-endif
-if !hasmapto(":RemoveErrorMarkers<cr>", "n") &&
-            \ (!exists('g:errormarker_disablemappings') || !g:errormarker_disablemappings)
-    nmap <silent> <unique> <Leader>cr :RemoveErrorMarkers<CR>
-endif
-
 function! s:DefineVariable(name, default)
     if !exists(a:name)
         execute 'let ' . a:name . ' = "' . escape(a:default, '\"') . '"'
@@ -58,7 +50,7 @@ function! s:DefineVariable(name, default)
 endfunction
 
 
-" === Variables =========================================================={{{1
+" === Variables ==========================================================
 
 let s:iconpath = expand("<sfile>:h:h") . "/icons/"
 
@@ -94,7 +86,7 @@ call s:DefineVariable("g:errormarker_infotypes", "iI")
 
 
 
-" === Global ============================================================={{{1
+" === Global =============================================================
 
 " Define the signs
 let s:erroricon = ""
@@ -134,7 +126,7 @@ augroup errormarker
 augroup END
 
 
-" === Functions =========================================================={{{1
+" === Functions ==========================================================
 
 function! s:ShowErrorAtCursor()
     let [l:bufnr, l:lnum] = getpos(".")[0:1]
@@ -213,11 +205,8 @@ function! s:SID()
 endfunction
 
 
-" === Cleanup ============================================================{{{1
+" === Cleanup ============================================================
 
 let &cpo = s:save_cpo
 
 finish
-
-" vim:ft=vim foldmethod=marker tw=78
-"
